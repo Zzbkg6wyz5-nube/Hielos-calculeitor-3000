@@ -1,2 +1,809 @@
-# Hielos-calculeitor-3000
-Hielos calculo
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="HIELOS 9mm">
+<meta name="theme-color" content="#080f1e">
+<link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%23080f1e'/><text y='.9em' font-size='72' x='50%' text-anchor='middle' dominant-baseline='auto'>🧊</text></svg>">
+<link rel="manifest" href="data:application/json,%7B%22name%22%3A%22HIELOS%209mm%22%2C%22short_name%22%3A%22HIELOS%209mm%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23080f1e%22%2C%22theme_color%22%3A%22%23080f1e%22%2C%22orientation%22%3A%22portrait%22%7D">
+<title>HIELOS 9mm</title>
+
+<style>
+/* PWA splash */
+html { background: #080f1e; }
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ice:#dff4ff;--deep:#080f1e;--navy:#0d1e3a;
+  --accent:#00b4e6;--accent2:#00e5c4;
+  --warn:#ff6b35;--red:#e53935;--green:#00a878;
+  --white:#eef6ff;--gray:#6a8fab;
+  --border:rgba(0,180,230,0.18);--card:rgba(255,255,255,0.03);
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:"DM Sans",sans-serif;
+  background:var(--deep);color:var(--white);min-height:100vh;
+  background-image:
+    radial-gradient(ellipse 90% 50% at 50% -5%,rgba(0,180,230,0.13) 0%,transparent 65%),
+    radial-gradient(ellipse 40% 40% at 92% 85%,rgba(0,229,196,0.07) 0%,transparent 55%);
+  -webkit-font-smoothing:antialiased;
+}
+header{text-align:center;padding:36px 20px 20px;}
+header::after{content:"";display:block;width:80px;height:2px;background:linear-gradient(90deg,transparent,var(--accent),transparent);margin:14px auto 0;}
+.logo{font-family:"Bebas Neue",sans-serif;font-size:clamp(44px,12vw,80px);letter-spacing:.08em;line-height:1;background:linear-gradient(135deg,var(--ice) 0%,var(--accent) 50%,var(--accent2) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.tagline{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--gray);margin-top:4px;}
+.container{max-width:820px;margin:0 auto;padding:0 14px 80px;}
+.stitle{font-family:"Bebas Neue",sans-serif;font-size:18px;letter-spacing:.14em;color:var(--accent);margin:24px 0 10px;display:flex;align-items:center;gap:8px;}
+.stitle::before{content:"";width:4px;height:18px;flex-shrink:0;background:linear-gradient(180deg,var(--accent),var(--accent2));border-radius:2px;}
+.card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px;position:relative;overflow:hidden;}
+.card::before{content:"";position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(0,180,230,0.35),transparent);}
+label.lbl{display:block;font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--gray);margin-bottom:5px;font-weight:600;}
+input[type=text],input[type=number],input[type=date],select{
+  width:100%;background:rgba(255,255,255,0.05);border:1px solid rgba(0,180,230,0.2);
+  border-radius:10px;padding:12px 13px;color:var(--white);
+  font-family:"DM Sans",sans-serif;font-size:15px;
+  transition:border-color .2s,box-shadow .2s;outline:none;
+  -moz-appearance:textfield;color-scheme:dark;
+  -webkit-appearance:none;appearance:none;
+}
+input[type=number]{-moz-appearance:textfield;}
+input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appearance:none;}
+input:focus,select:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(0,180,230,0.12);}
+select option{background:var(--navy);}
+input[type=date]::-webkit-calendar-picker-indicator{filter:invert(0.7) sepia(1) saturate(3) hue-rotate(170deg);cursor:pointer;padding:2px;}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:11px;}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:11px;}
+@media(max-width:540px){
+  .g2{grid-template-columns:1fr 1fr;}
+  .g3{grid-template-columns:1fr 1fr;}
+}
+@media(max-width:360px){
+  .g2,.g3{grid-template-columns:1fr;}
+}
+.pblock{background:rgba(0,180,230,0.04);border:1px solid rgba(0,180,230,0.13);border-radius:11px;padding:14px;}
+.ptitle{font-family:"Bebas Neue",sans-serif;font-size:15px;letter-spacing:.1em;margin-bottom:11px;display:flex;align-items:center;gap:7px;}
+.badge{display:inline-block;padding:2px 9px;border-radius:20px;font-size:10px;font-family:"DM Mono",monospace;font-weight:500;letter-spacing:.04em;}
+.b1{background:rgba(0,180,230,0.18);color:var(--accent);border:1px solid rgba(0,180,230,0.3);}
+.b2{background:rgba(0,229,196,0.14);color:var(--accent2);border:1px solid rgba(0,229,196,0.3);}
+.check-row{display:flex;align-items:center;gap:10px;cursor:pointer;padding:6px 0;user-select:none;}
+.check-row input[type=checkbox]{width:18px;height:18px;accent-color:var(--accent);cursor:pointer;flex-shrink:0;}
+.check-row span{font-size:13px;line-height:1.4;}
+.dbox{background:rgba(0,229,196,0.07);border:1px solid rgba(0,229,196,0.22);border-radius:8px;padding:8px 12px;font-size:12px;color:var(--accent2);margin-top:11px;display:none;}
+/* TOGGLE MENSUAL */
+.mensual-toggle{display:flex;align-items:center;gap:10px;background:rgba(0,180,230,0.06);border:1px solid rgba(0,180,230,0.2);border-radius:11px;padding:13px 15px;cursor:pointer;margin-bottom:13px;transition:background .2s;-webkit-tap-highlight-color:transparent;}
+.mensual-toggle:active{background:rgba(0,180,230,0.12);}
+.mensual-toggle .icon{font-size:20px;flex-shrink:0;}
+.mensual-toggle .txt{flex:1;}
+.mensual-toggle .txt strong{font-size:13px;display:block;}
+.mensual-toggle .txt span{font-size:11px;color:var(--gray);}
+.toggle-arrow{font-size:18px;color:var(--accent);transition:transform .3s;flex-shrink:0;}
+.toggle-arrow.open{transform:rotate(90deg);}
+.entregas-panel{display:none;margin-top:4px;}
+.entregas-panel.visible{display:block;}
+/* TARJETA ENTREGA */
+.entrega-card{background:rgba(0,180,230,0.04);border:1px solid rgba(0,180,230,0.14);border-radius:11px;padding:13px;margin-bottom:10px;}
+.entrega-top{display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:9px;align-items:end;margin-bottom:11px;}
+@media(max-width:480px){.entrega-top{grid-template-columns:1fr 1fr auto;}}
+.entrega-envio-box{background:rgba(0,229,196,0.04);border:1px solid rgba(0,229,196,0.13);border-radius:9px;padding:11px;}
+.entrega-envio-title{font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--accent2);margin-bottom:9px;font-weight:700;}
+.entrega-envio-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:9px;}
+@media(max-width:420px){.entrega-envio-grid{grid-template-columns:1fr 1fr;}}
+.entrega-envio-resumen{font-size:11px;color:var(--gray);margin-top:8px;text-align:right;line-height:1.6;}
+.entrega-envio-resumen span{color:var(--white);font-weight:600;}
+.btn-add-entrega{display:flex;align-items:center;justify-content:center;gap:6px;background:rgba(0,229,196,0.08);border:1px dashed rgba(0,229,196,0.3);border-radius:9px;padding:12px 14px;color:var(--accent2);font-size:13px;font-family:"DM Sans",sans-serif;cursor:pointer;transition:background .2s;width:100%;margin-top:6px;touch-action:manipulation;}
+.btn-add-entrega:active{background:rgba(0,229,196,0.16);}
+.btn-del-e{background:rgba(229,57,53,0.1);border:1px solid rgba(229,57,53,0.25);border-radius:8px;padding:11px 13px;color:var(--red);cursor:pointer;font-size:15px;line-height:1;transition:background .2s;white-space:nowrap;touch-action:manipulation;}
+.btn-del-e:active{background:rgba(229,57,53,0.22);}
+.entrega-resumen-bar{background:rgba(0,180,230,0.05);border:1px solid rgba(0,180,230,0.15);border-radius:9px;padding:10px 13px;margin-top:10px;font-size:12px;color:var(--gray);}
+.entrega-resumen-bar span{color:var(--white);font-weight:600;}
+/* RESUMEN LIVE */
+.r-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.05);font-size:13px;gap:8px;}
+.r-row:last-child{border-bottom:none;}
+.r-row .rl{color:var(--gray);flex:1;}
+.r-row .rv{font-family:"DM Mono",monospace;font-weight:500;flex-shrink:0;}
+.r-row.tot{margin-top:5px;padding-top:12px;border-top:2px solid rgba(0,180,230,0.28);border-bottom:none;}
+.r-row.tot .rl{font-weight:600;color:var(--white);font-size:14px;}
+.r-row.tot .rv{color:var(--accent2);font-size:18px;}
+/* GANANCIA */
+.g-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;}
+.g-item{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:9px;padding:12px;text-align:center;}
+.g-item.tot{background:rgba(0,229,196,0.07);border-color:rgba(0,229,196,0.24);}
+.g-lbl{font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--gray);margin-bottom:4px;}
+.g-val{font-family:"DM Mono",monospace;font-size:15px;font-weight:500;color:var(--accent2);}
+.g-item.tot .g-val{font-size:19px;}
+/* SELECTOR CUENTA */
+.cuentas-wrap{display:flex;flex-direction:column;gap:8px;margin-top:3px;}
+.cuenta-opt{display:flex;align-items:center;gap:10px;background:rgba(255,255,255,0.03);border:1px solid rgba(0,180,230,0.15);border-radius:10px;padding:11px 13px;cursor:pointer;transition:border-color .2s,background .2s;touch-action:manipulation;}
+.cuenta-opt:active,.cuenta-opt.sel{background:rgba(0,180,230,0.08);border-color:var(--accent);}
+.cuenta-opt input[type=radio]{accent-color:var(--accent);width:16px;height:16px;flex-shrink:0;}
+.cuenta-info strong{font-size:13px;display:block;color:var(--white);}
+.cuenta-info span{font-size:11px;color:var(--gray);}
+/* BOTÓN GENERAR */
+.btn-gen{width:100%;padding:17px;background:linear-gradient(135deg,var(--accent) 0%,var(--accent2) 100%);border:none;border-radius:13px;font-family:"Bebas Neue",sans-serif;font-size:22px;letter-spacing:.16em;color:var(--deep);cursor:pointer;margin-top:22px;transition:transform .15s,box-shadow .2s;box-shadow:0 4px 20px rgba(0,180,230,0.22);touch-action:manipulation;}
+.btn-gen:active{transform:scale(0.98);}
+/* FACTURA */
+#fw{display:none;margin-top:28px;}
+#capture-zone{background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 16px 50px rgba(0,0,0,0.4);max-width:480px;margin:0 auto;width:100%;}
+.fh{background:linear-gradient(135deg,#080f1e 0%,#0d1e3a 100%);padding:20px 22px 16px;color:#fff;display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:10px;}
+.f-logo{font-family:"Bebas Neue",sans-serif;font-size:28px;letter-spacing:.09em;line-height:1;background:linear-gradient(135deg,#dff4ff,#00b4e6,#00e5c4);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.f-ref{font-size:9px;font-family:"DM Mono",monospace;color:rgba(0,229,196,0.7);margin-top:3px;}
+.f-sub-t{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-top:2px;}
+.f-meta{text-align:right;font-size:10px;color:rgba(255,255,255,0.5);line-height:1.8;}
+.f-meta strong{color:rgba(255,255,255,0.88);}
+.fb{padding:16px 18px;background:#fff;}
+.f-sec-lbl{font-size:8px;text-transform:uppercase;letter-spacing:.2em;color:#8aa0be;margin-bottom:5px;font-weight:700;}
+.f-dir{font-size:13px;font-weight:600;color:#1a2235;background:#f3f8ff;padding:9px 13px;border-radius:7px;border-left:3px solid #00b4e6;margin-bottom:16px;}
+.f-dir .fc{font-size:11px;font-weight:400;color:#5a7a9a;margin-top:2px;}
+.ft{width:100%;border-collapse:collapse;font-size:12px;}
+.ft th{text-align:left;padding:6px 9px;background:#edf4ff;font-size:8px;text-transform:uppercase;letter-spacing:.14em;color:#5a7a9a;font-weight:700;}
+.ft th:last-child,.ft td:last-child{text-align:right;}
+.ft td{padding:8px 9px;border-bottom:1px solid #edf4ff;color:#1a2235;}
+.ft tr.fsub td{border-top:2px solid #c8dff5;font-weight:600;color:#0d1e3a;background:#f8fbff;}
+.ft tr.fdet td{font-size:11px;color:#5a7a9a;padding-top:4px;padding-bottom:4px;}
+.ft tr.fdsc td{color:#e53935;}
+.ft tr.ffree td{color:#00a878;}
+.ft tr.ftot td{background:linear-gradient(135deg,#080f1e,#0d1e3a);color:#fff;font-size:14px;font-weight:700;border-bottom:none;}
+.ft tr.fppu td{background:#f3f8ff;color:#5a7a9a;font-size:10px;font-style:italic;border-bottom:none;}
+.f-entregas{margin-bottom:13px;}
+.f-entregas-title{font-size:8px;text-transform:uppercase;letter-spacing:.17em;color:#5a7a9a;font-weight:700;margin-bottom:5px;}
+.f-entrega-item{display:flex;justify-content:space-between;font-size:11px;color:#1a2235;padding:5px 9px;border-bottom:1px solid #f0f5fb;gap:6px;flex-wrap:wrap;}
+.f-entrega-item:last-child{border-bottom:none;}
+.f-entrega-item .fe-fecha{color:#5a7a9a;font-family:"DM Mono",monospace;white-space:nowrap;}
+.f-entrega-item .fe-detalle{font-weight:500;flex:1;}
+.f-entrega-item .fe-envio{font-size:10px;color:#8aa0be;font-family:"DM Mono",monospace;}
+hr.fdash{border:none;border-top:1px dashed #ccdaea;margin:14px 0;}
+.f-pago{background:#f3f8ff;border-radius:9px;padding:13px 15px;border:1px solid #ccdaea;}
+.f-pago .f-sec-lbl{margin-bottom:8px;}
+.p-row{display:flex;justify-content:space-between;font-size:11px;padding:2px 0;}
+.p-row .k{color:#5a7a9a;}
+.p-row .v{font-family:"DM Mono",monospace;font-weight:500;color:#1a2235;}
+.f-foot{background:#edf4ff;padding:9px 18px;text-align:center;font-size:9px;color:#8aa0be;border-top:1px solid #ccdaea;}
+.btn-actions{display:flex;gap:10px;max-width:480px;margin:12px auto 0;}
+.btn-action{flex:1;padding:13px;background:transparent;border:1px solid rgba(0,180,230,0.3);border-radius:10px;font-family:"DM Sans",sans-serif;font-size:13px;color:var(--accent);cursor:pointer;transition:background .2s;text-align:center;touch-action:manipulation;}
+.btn-action:active{background:rgba(0,180,230,0.12);}
+.btn-action.primary{background:rgba(0,180,230,0.1);border-color:var(--accent);font-weight:600;}
+.captura-hint{max-width:480px;margin:10px auto 0;background:rgba(0,229,196,0.07);border:1px solid rgba(0,229,196,0.2);border-radius:9px;padding:10px 14px;font-size:11px;color:var(--accent2);text-align:center;display:none;}
+/* N° REFERENCIA — input sin 0 molestando */
+.ref-wrap{position:relative;}
+.ref-wrap input{padding-right:36px;}
+.ref-badge{position:absolute;right:10px;top:50%;transform:translateY(-50%);font-size:10px;color:var(--accent2);font-family:"DM Mono",monospace;pointer-events:none;opacity:.5;}
+@media print{
+  *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;}
+  html,body{background:#fff!important;margin:0!important;padding:0!important;}
+  body>*{display:none!important;}
+  #fw{display:block!important;margin:0!important;}
+  .btn-actions,.captura-hint{display:none!important;}
+  #capture-zone{box-shadow:none!important;border-radius:0!important;max-width:100%!important;width:100%!important;margin:0!important;}
+  @page{margin:0.5cm;size:A4;}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">HIELOS 9mm</div>
+  <div class="tagline">Sistema de Cotización · Puente Alto, Chile</div>
+</header>
+<div class="container">
+
+  <!-- CLIENTE -->
+  <div class="stitle">Datos del Cliente</div>
+  <div class="card">
+    <div class="g2" style="margin-bottom:12px">
+      <div>
+        <label class="lbl">Nombre del cliente</label>
+        <input type="text" id="cli-nombre" placeholder="Ej: Juan Pérez" autocomplete="off">
+      </div>
+      <div>
+        <label class="lbl">Dirección de entrega</label>
+        <input type="text" id="cli-dir" placeholder="Ej: Gran Avenida 1234" onblur="formatDir(this)" autocomplete="off">
+      </div>
+    </div>
+    <div class="g2" style="margin-bottom:12px">
+      <div>
+        <label class="lbl">N° de referencia</label>
+        <div class="ref-wrap">
+          <input type="number" id="ref-num" min="1" placeholder="Ej: 42" oninput="fixRef(this)" onfocus="clearRef(this)" onblur="restoreRef(this)">
+          <span class="ref-badge" id="ref-badge">#</span>
+        </div>
+      </div>
+      <div style="display:flex;align-items:flex-end;">
+        <label class="check-row" style="padding-bottom:0;padding-top:0;align-self:flex-end;padding:8px 0;">
+          <input type="checkbox" id="pa">
+          <span>📍 <strong>Puente Alto</strong> — envío gratis</span>
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <!-- PEDIDO -->
+  <div class="stitle">Pedido de Hielos</div>
+  <div class="card">
+    <div class="mensual-toggle" id="toggle-btn">
+      <div class="icon">📅</div>
+      <div class="txt">
+        <strong>Modo cliente mensual</strong>
+        <span>Múltiples entregas con envío independiente por fecha</span>
+      </div>
+      <div class="toggle-arrow" id="arrow">▶</div>
+    </div>
+    <div class="entregas-panel" id="entregas-panel">
+      <div id="lista-entregas"></div>
+      <button class="btn-add-entrega" id="btn-agregar">＋ Agregar entrega</button>
+      <div class="entrega-resumen-bar" id="ent-resumen" style="display:none">
+        Total: <span id="ent-t1">0 bolsas 1kg</span> · <span id="ent-t2">0 bolsas 2kg</span>
+        · <span id="ent-kg">0 kg</span> · Envío total: <span id="ent-env">$0</span>
+      </div>
+    </div>
+    <div id="modo-normal">
+      <div class="g2" style="margin-top:4px">
+        <div class="pblock">
+          <div class="ptitle"><span class="badge b1">1 KG</span> Bolsa de Kilo</div>
+          <div style="margin-bottom:10px">
+            <label class="lbl">Cantidad</label>
+            <input type="number" id="q1" min="0" placeholder="0" oninput="calcular()">
+          </div>
+          <div>
+            <label class="lbl">Precio / bolsa</label>
+            <select id="p1" onchange="calcular()">
+              <option value="380">$380</option><option value="400" selected>$400</option>
+              <option value="450">$450</option><option value="500">$500</option>
+              <option value="550">$550</option><option value="600">$600</option>
+            </select>
+          </div>
+        </div>
+        <div class="pblock">
+          <div class="ptitle"><span class="badge b2">2 KG</span> Bolsa de 2 Kilos</div>
+          <div style="margin-bottom:10px">
+            <label class="lbl">Cantidad</label>
+            <input type="number" id="q2" min="0" placeholder="0" oninput="calcular()">
+          </div>
+          <div>
+            <label class="lbl">Precio / bolsa</label>
+            <select id="p2" onchange="calcular()">
+              <option value="650">$650</option><option value="700" selected>$700</option>
+              <option value="750">$750</option><option value="800">$800</option>
+              <option value="850">$850</option><option value="900">$900</option>
+              <option value="950">$950</option><option value="1000">$1.000</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="precios-mensual" style="display:none;margin-top:13px;">
+      <div class="g2">
+        <div class="pblock">
+          <div class="ptitle"><span class="badge b1">1 KG</span> Precio bolsa 1kg</div>
+          <select id="p1m" onchange="calcular()">
+            <option value="380">$380</option><option value="400" selected>$400</option>
+            <option value="450">$450</option><option value="500">$500</option>
+            <option value="550">$550</option><option value="600">$600</option>
+          </select>
+        </div>
+        <div class="pblock">
+          <div class="ptitle"><span class="badge b2">2 KG</span> Precio bolsa 2kg</div>
+          <select id="p2m" onchange="calcular()">
+            <option value="650">$650</option><option value="700" selected>$700</option>
+            <option value="750">$750</option><option value="800">$800</option>
+            <option value="850">$850</option><option value="900">$900</option>
+            <option value="950">$950</option><option value="1000">$1.000</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ENVÍO (modo normal) -->
+  <div id="sec-envio-normal">
+    <div class="stitle">Cálculo de Envío</div>
+    <div class="card">
+      <div class="g3">
+        <div>
+          <label class="lbl">Bencina ($/lt)</label>
+          <input type="number" id="bencina" value="1600" oninput="calcular()">
+        </div>
+        <div>
+          <label class="lbl">Peaje ($)</label>
+          <input type="number" id="peaje" value="0" placeholder="0" oninput="calcular()">
+        </div>
+        <div>
+          <label class="lbl">Kilómetros</label>
+          <input type="number" id="kms" value="0" placeholder="0" step="0.1" oninput="calcular()">
+        </div>
+      </div>
+      <p style="font-size:10px;color:var(--gray);margin-top:9px">⚡ Chery Tiggo 2 Pro Max · 13 km/l · ×2 ida y vuelta</p>
+      <div class="dbox" id="dbox"></div>
+    </div>
+  </div>
+
+  <!-- RESUMEN -->
+  <div class="stitle">Resumen en Vivo</div>
+  <div class="card" id="resumen">
+    <div class="r-row"><span class="rl">Ingresa los datos del pedido...</span></div>
+  </div>
+
+  <!-- GANANCIA -->
+  <div class="stitle">Ganancia Estimada</div>
+  <div class="card">
+    <div class="g-grid" id="ggrid">
+      <div class="g-item"><div class="g-lbl">Esperando</div><div class="g-val">—</div></div>
+    </div>
+  </div>
+
+  <!-- CUENTA BANCARIA -->
+  <div class="stitle">Cuenta para Transferencia</div>
+  <div class="card">
+    <div class="cuentas-wrap" id="cuentas-wrap">
+      <label class="cuenta-opt sel">
+        <input type="radio" name="cuenta" value="0" checked onchange="selCuenta(this)">
+        <div class="cuenta-info">
+          <strong>Ricardo Soto</strong>
+          <span>Banco Falabella · Cta. Corriente · 15140094057</span>
+        </div>
+      </label>
+      <label class="cuenta-opt">
+        <input type="radio" name="cuenta" value="1" onchange="selCuenta(this)">
+        <div class="cuenta-info">
+          <strong>Natalia Rodríguez</strong>
+          <span>Banco Falabella · Cta. Corriente · 19840491838</span>
+        </div>
+      </label>
+      <label class="cuenta-opt">
+        <input type="radio" name="cuenta" value="2" onchange="selCuenta(this)">
+        <div class="cuenta-info">
+          <strong>Fernando Flores</strong>
+          <span>Banco Falabella · Cta. Corriente · 10013519735</span>
+        </div>
+      </label>
+    </div>
+  </div>
+
+  <button class="btn-gen" onclick="generarFactura()">⬇ GENERAR COTIZACIÓN</button>
+
+  <!-- FACTURA -->
+  <div id="fw">
+    <div id="capture-zone">
+      <div id="factura-content"></div>
+    </div>
+    <div class="btn-actions">
+      <button class="btn-action" onclick="imprimirFactura()">🖨 Imprimir / PDF</button>
+      <button class="btn-action primary" onclick="mostrarHint()">📱 Captura de pantalla</button>
+    </div>
+    <div class="captura-hint" id="captura-hint">
+      📸 Lista para captura. Desplázate hasta verla completa antes de tomar la foto.
+    </div>
+  </div>
+
+</div>
+
+<script>
+const KML = 13;
+let modoMensual = false;
+let entregas = [];
+let entId = 0;
+let cuentaSel = 0;
+
+const CUENTAS = [
+  {nombre:"Ricardo Soto", rut:"—", banco:"Banco Falabella", tipo:"Cuenta Corriente", num:"15140094057", email:"ricardosoto2501@gmail.com"},
+  {nombre:"Natalia Rodríguez", rut:"19.872.491-2", banco:"Banco Falabella", tipo:"Cuenta Corriente", num:"19840491838", email:""},
+  {nombre:"Fernando Flores", rut:"19.339.799-9", banco:"Banco Falabella", tipo:"Cuenta Corriente", num:"10013519735", email:""}
+];
+
+/* ── N° REFERENCIA sin 0 molestando ── */
+function fixRef(el){
+  if(el.value.startsWith("0") && el.value.length>1){
+    el.value = parseInt(el.value,10);
+  }
+}
+function clearRef(el){
+  if(el.value==="0"||el.value==="") el.value="";
+}
+function restoreRef(el){
+  /* nada, dejar vacío si no puso nada */
+}
+
+/* ── FORMATO DIRECCIÓN ── */
+function formatDir(el){
+  var v=el.value.trim(); if(!v)return;
+  var m=v.match(/^(.*?)\s*(?:n[°º]?\s*)?(\d[\d.]*)$/i);
+  if(m){
+    var calle=m[1].trim().replace(/\w/g,function(c){return c.toUpperCase();});
+    var num=parseInt(m[2].replace(/\./g,""),10).toLocaleString("es-CL");
+    el.value=calle+" N° "+num;
+  } else {
+    el.value=v.replace(/\w/g,function(c){return c.toUpperCase();});
+  }
+}
+
+/* ── SELECTOR CUENTA ── */
+function selCuenta(radio){
+  cuentaSel=parseInt(radio.value);
+  document.querySelectorAll(".cuenta-opt").forEach(function(el,i){
+    el.classList.toggle("sel",i===cuentaSel);
+  });
+}
+
+/* ── HELPERS ── */
+function nv(id){return parseFloat(document.getElementById(id).value)||0;}
+function iv(id){return parseInt(document.getElementById(id).value)||0;}
+function pesos(v){
+  if(isNaN(v)||v===null)return "$0";
+  var a=Math.abs(Math.round(v));
+  return (v<0?"-":"")+"$"+a.toLocaleString("es-CL");
+}
+function fmtF(s){
+  if(!s)return "—";
+  var p=s.split("-"); return p[2]+"/"+p[1]+"/"+p[0].slice(2);
+}
+
+/* ── DESCUENTO ENVÍO ── */
+function getDesc(kg){
+  if(kg>=150)return{tipo:"gratis"};
+  if(kg>=100)return{tipo:"fijo",monto:12000};
+  if(kg>=90) return{tipo:"xkg",pxk:120};
+  if(kg>=80) return{tipo:"xkg",pxk:110};
+  if(kg>=70) return{tipo:"xkg",pxk:100};
+  if(kg>=60) return{tipo:"xkg",pxk:90};
+  if(kg>=50) return{tipo:"xkg",pxk:80};
+  if(kg>=40) return{tipo:"xkg",pxk:60};
+  if(kg>=30) return{tipo:"xkg",pxk:40};
+  return{tipo:"sin"};
+}
+function aplicarDesc(kg,base){
+  var d=getDesc(kg);
+  if(d.tipo==="gratis")return{envFinal:0,desc:base,label:"Envío gratis por volumen"};
+  if(d.tipo==="fijo"){var dm=Math.min(d.monto,base);return{envFinal:base-dm,desc:dm,label:"Descuento por volumen"};}
+  if(d.tipo==="xkg"){var dm2=Math.min(d.pxk*kg,base);return{envFinal:base-dm2,desc:dm2,label:"Descuento por volumen"};}
+  return{envFinal:base,desc:0,label:""};
+}
+
+function calcEnvio(bencina,peaje,kms){
+  var l=(kms/KML)*2;
+  var comb=Math.round(l*bencina);
+  var peajeT=Math.round(peaje*2);
+  return{base:comb+peajeT,comb:comb,peajeT:peajeT};
+}
+
+/* ── TOGGLE MENSUAL ── */
+document.getElementById("toggle-btn").addEventListener("click",function(){toggleMensual();});
+document.getElementById("btn-agregar").addEventListener("click",function(){agregarEntrega();});
+
+function toggleMensual(){
+  modoMensual=!modoMensual;
+  document.getElementById("entregas-panel").classList.toggle("visible",modoMensual);
+  document.getElementById("modo-normal").style.display=modoMensual?"none":"block";
+  document.getElementById("precios-mensual").style.display=modoMensual?"block":"none";
+  document.getElementById("sec-envio-normal").style.display=modoMensual?"none":"block";
+  document.getElementById("arrow").classList.toggle("open",modoMensual);
+  if(modoMensual&&entregas.length===0)agregarEntrega();
+  calcular();
+}
+
+function agregarEntrega(){
+  var id=++entId;
+  entregas.push({id:id,fecha:"",q1:0,q2:0,bencina:1600,peaje:0,kms:0});
+  renderEntregas();
+}
+function eliminarEntrega(id){
+  entregas=entregas.filter(function(e){return e.id!==id;});
+  renderEntregas(); calcular();
+}
+
+function renderEntregas(){
+  var lista=document.getElementById("lista-entregas");
+  var esPa=document.getElementById("pa").checked;
+  lista.innerHTML=entregas.map(function(e){
+    var kg=e.q1+e.q2*2;
+    var r=calcEnvio(e.bencina,e.peaje,e.kms);
+    var d=esPa?{envFinal:0,desc:r.base,label:""}:aplicarDesc(kg,r.base);
+    var resHtml="Envío: <span>"+pesos(d.envFinal)+"</span>";
+    if(!esPa&&r.base>0){
+      resHtml+=" (base "+pesos(r.base);
+      if(d.desc>0)resHtml+=" — desc: "+pesos(d.desc);
+      resHtml+=")";
+    }
+    if(esPa&&r.base>0)resHtml=" Envío: <span>$0</span> (Puente Alto)";
+    return "<div class='entrega-card' id='ec-"+e.id+"'>"+
+      "<div class='entrega-top'>"+
+      "<div><label class='lbl'>Fecha</label><input type='date' value='"+e.fecha+"' onchange="updE("+e.id+",'fecha',this.value)" style='cursor:pointer'></div>"+
+      "<div><label class='lbl'>Bolsas 1kg</label><input type='number' min='0' placeholder='0' value='"+(e.q1||"")+"' oninput="updE("+e.id+",'q1',this.value)"></div>"+
+      "<div><label class='lbl'>Bolsas 2kg</label><input type='number' min='0' placeholder='0' value='"+(e.q2||"")+"' oninput="updE("+e.id+",'q2',this.value)"></div>"+
+      "<div><label class='lbl'>&nbsp;</label><button class='btn-del-e' onclick='eliminarEntrega("+e.id+")'>✕</button></div>"+
+      "</div>"+
+      "<div class='entrega-envio-box'>"+
+      "<div class='entrega-envio-title'>🚗 Envío de esta entrega</div>"+
+      "<div class='entrega-envio-grid'>"+
+      "<div><label class='lbl'>Bencina $/lt</label><input type='number' min='0' value='"+e.bencina+"' oninput="updE("+e.id+",'bencina',this.value)"></div>"+
+      "<div><label class='lbl'>Peaje $</label><input type='number' min='0' value='"+e.peaje+"' placeholder='0' oninput="updE("+e.id+",'peaje',this.value)"></div>"+
+      "<div><label class='lbl'>Kilómetros</label><input type='number' min='0' step='0.1' value='"+e.kms+"' placeholder='0' oninput="updE("+e.id+",'kms',this.value)"></div>"+
+      "</div>"+
+      "<div class='entrega-envio-resumen' id='er-"+e.id+"'>"+resHtml+"</div>"+
+      "</div></div>";
+  }).join("");
+  /* Hacer que el input date cierre al seleccionar en móvil */
+  document.querySelectorAll(".entrega-card input[type=date]").forEach(function(inp){
+    inp.addEventListener("change",function(){this.blur();});
+  });
+  actualizarResumenEntregas();
+}
+
+function updE(id,campo,val){
+  var e=entregas.find(function(x){return x.id===id;});
+  if(!e)return;
+  if(campo==="fecha")e.fecha=val;
+  else if(["bencina","peaje","kms"].indexOf(campo)>-1)e[campo]=parseFloat(val)||0;
+  else e[campo]=parseInt(val)||0;
+  /* actualizar resumen de envío inline */
+  var esPa=document.getElementById("pa").checked;
+  var kg=e.q1+e.q2*2;
+  var r=calcEnvio(e.bencina,e.peaje,e.kms);
+  var d=esPa?{envFinal:0,desc:r.base,label:""}:aplicarDesc(kg,r.base);
+  var resDiv=document.getElementById("er-"+id);
+  if(resDiv){
+    var resHtml="Envío: <span>"+pesos(d.envFinal)+"</span>";
+    if(!esPa&&r.base>0){
+      resHtml+=" (base "+pesos(r.base);
+      if(d.desc>0)resHtml+=" — desc: "+pesos(d.desc);
+      resHtml+=")";
+    }
+    if(esPa&&r.base>0)resHtml="Envío: <span>$0</span> (Puente Alto)";
+    resDiv.innerHTML=resHtml;
+  }
+  actualizarResumenEntregas();
+  calcular();
+}
+
+function actualizarResumenEntregas(){
+  var t1=entregas.reduce(function(s,e){return s+e.q1;},0);
+  var t2=entregas.reduce(function(s,e){return s+e.q2;},0);
+  var kg=t1+t2*2;
+  var esPa=document.getElementById("pa").checked;
+  var tEnv=entregas.reduce(function(s,e){
+    var r=calcEnvio(e.bencina,e.peaje,e.kms);
+    var ek=e.q1+e.q2*2;
+    var d=esPa?{envFinal:0}:aplicarDesc(ek,r.base);
+    return s+d.envFinal;
+  },0);
+  var res=document.getElementById("ent-resumen");
+  if(t1>0||t2>0){
+    res.style.display="block";
+    document.getElementById("ent-t1").textContent=t1+" bolsas 1kg";
+    document.getElementById("ent-t2").textContent=t2+" bolsas 2kg";
+    document.getElementById("ent-kg").textContent=kg+" kg";
+    document.getElementById("ent-env").textContent=pesos(tEnv);
+  } else res.style.display="none";
+}
+
+/* ── CALCULAR ── */
+function calcular(){
+  var esPa=document.getElementById("pa").checked;
+  var q1,q2,p1,p2,envBase=0,comb=0,peajeT=0,envFinal=0,descMonto=0,descLbl="";
+  var esGratis=esPa;
+
+  if(modoMensual){
+    q1=entregas.reduce(function(s,e){return s+e.q1;},0);
+    q2=entregas.reduce(function(s,e){return s+e.q2;},0);
+    p1=iv("p1m");p2=iv("p2m");
+    entregas.forEach(function(e){
+      var r=calcEnvio(e.bencina,e.peaje,e.kms);
+      var ek=e.q1+e.q2*2;
+      var d=esPa?{envFinal:0}:aplicarDesc(ek,r.base);
+      envBase+=r.base; comb+=r.comb; peajeT+=r.peajeT;
+      envFinal+=d.envFinal;
+    });
+    descMonto=envBase-envFinal;
+  } else {
+    q1=iv("q1"); q2=iv("q2"); p1=iv("p1"); p2=iv("p2");
+    var r=calcEnvio(nv("bencina")||1600,nv("peaje"),nv("kms"));
+    envBase=r.base; comb=r.comb; peajeT=r.peajeT;
+    if(esPa){envFinal=0;descMonto=envBase;}
+    else if(envBase>0){
+      var ek=q1+q2*2;
+      var d=aplicarDesc(ek,envBase);
+      envFinal=d.envFinal; descMonto=d.desc; descLbl=d.label;
+    } else envFinal=0;
+  }
+
+  var kg=q1+q2*2;
+  var bolsas=q1+q2;
+  var hielos=q1*p1+q2*p2;
+  var total=hielos+envFinal;
+  var ppu=bolsas>0?total/bolsas:0;
+
+  /* dbox */
+  var db=document.getElementById("dbox");
+  if(!modoMensual){
+    if(esPa){db.style.display="block";db.innerHTML="📍 Puente Alto — <strong>envío gratis</strong>";}
+    else if(envBase>0&&kg>0){
+      db.style.display="block";
+      var dl=aplicarDesc(kg,envBase);
+      db.innerHTML="<strong>"+kg+" kg</strong>"+(dl.desc>0?" → "+dl.label+": <strong>-"+pesos(dl.desc)+"</strong>":"");
+    } else db.style.display="none";
+  } else db.style.display="none";
+
+  /* resumen */
+  var h="";
+  if(q1>0)h+=rr("Hielos 1 kg — "+q1+" × "+pesos(p1),pesos(q1*p1));
+  if(q2>0)h+=rr("Hielos 2 kg — "+q2+" × "+pesos(p2),pesos(q2*p2));
+  if(hielos>0)h+=rr("Subtotal hielos","<span style='color:var(--accent)'>"+pesos(hielos)+"</span>");
+
+  if(modoMensual&&entregas.length>0){
+    h+=rr("Envío total",esPa?"<span style='color:var(--gray)'>"+pesos(envBase)+"</span>":pesos(envFinal));
+    if(descMonto>0&&esPa)h+=rr("  — Descuento Puente Alto","<span style='color:var(--red)'>-"+pesos(descMonto)+"</span>");
+    else if(descMonto>0)h+=rr("  — Descuento por volumen","<span style='color:var(--red)'>-"+pesos(descMonto)+"</span>");
+    entregas.filter(function(e){return e.kms>0;}).forEach(function(e){
+      var r=calcEnvio(e.bencina,e.peaje,e.kms);
+      var ek=e.q1+e.q2*2;
+      var d=esPa?{envFinal:0}:aplicarDesc(ek,r.base);
+      h+=rr("  — "+(e.fecha?fmtF(e.fecha):"Sin fecha"),pesos(d.envFinal));
+    });
+  } else if(envBase>0){
+    h+=rr("Envío",esPa?"<span style='color:var(--gray)'>"+pesos(envBase)+"</span>":pesos(envFinal));
+    if(comb>0)  h+=rr("  — Combustible",pesos(comb));
+    if(peajeT>0)h+=rr("  — Peaje",pesos(peajeT));
+    if(esPa&&envBase>0) h+=rr("Descuento Puente Alto","<span style='color:var(--red)'>-"+pesos(envBase)+"</span>");
+    else if(descMonto>0)h+=rr("Descuento por volumen","<span style='color:var(--red)'>-"+pesos(descMonto)+"</span>");
+  }
+
+  if(bolsas>0){
+    h+="<div class='r-row tot'><span class='rl'>TOTAL</span><span class='rv'>"+pesos(total)+"</span></div>";
+    h+=rr("Promedio por bolsa",pesos(Math.round(ppu)));
+  }
+  document.getElementById("resumen").innerHTML=h||"<div class='r-row'><span class='rl'>Ingresa datos...</span></div>";
+
+  /* ganancia */
+  var bolt1=55,bolt2=80,luz=50,agua=5;
+  var ct1=q1>0?Math.ceil(q1/10)*50:0;
+  var ct2=q2>0?Math.ceil(q2/7)*50:0;
+  var costo=q1*(bolt1+luz+agua)+q2*(bolt2+luz+agua)+ct1+ct2;
+  var gan=hielos-costo;
+  document.getElementById("ggrid").innerHTML=
+    gi("Venta hielos",pesos(hielos),"","g-item")+
+    gi("Empaques","-"+pesos(q1*bolt1+q2*bolt2),"color:var(--warn)","g-item")+
+    gi("Luz + Agua","-"+pesos((q1+q2)*(luz+agua)),"color:var(--warn)","g-item")+
+    gi("Bolsas transp.","-"+pesos(ct1+ct2),"color:var(--warn)","g-item")+
+    gi("Ganancia neta",pesos(gan),"","g-item tot");
+
+  window._s={q1,q2,p1,p2,hielos,comb,peajeT,envBase,envFinal,descMonto,descLbl:esPa?"Descuento Puente Alto":"Descuento por volumen",esPa,total,ppu,bolsas,kg,ganancia:gan};
+}
+
+function rr(l,v){return "<div class='r-row'><span class='rl'>"+l+"</span><span class='rv'>"+v+"</span></div>";}
+function gi(lbl,val,style,cls){return "<div class='"+cls+"'><div class='g-lbl'>"+lbl+"</div><div class='g-val'"+(style?" style='"+style+"'":"")+">"+val+"</div></div>";}
+
+/* ── GENERAR FACTURA ── */
+function generarFactura(){
+  calcular();
+  var s=window._s;
+  if(!s||(s.q1===0&&s.q2===0)){alert("Ingresa al menos una cantidad de bolsas.");return;}
+  var nombre=document.getElementById("cli-nombre").value.trim()||"—";
+  var dir=document.getElementById("cli-dir").value.trim()||"—";
+  var refVal=document.getElementById("ref-num").value.trim();
+  var refStr=refVal&&refVal!=="0"?"#"+parseInt(refVal).toLocaleString("es-CL"):"";
+  var d=new Date();
+  var fecha=d.toLocaleDateString("es-CL",{weekday:"long",year:"numeric",month:"long",day:"numeric"});
+  var hora=d.toLocaleTimeString("es-CL",{hour:"2-digit",minute:"2-digit"});
+  var c=CUENTAS[cuentaSel];
+
+  /* filas productos */
+  var filas="";
+  if(s.q1>0)filas+="<tr><td><strong>Hielo bolsa 1 Kg</strong></td><td>"+s.q1+"</td><td>"+pesos(s.p1)+"</td><td><strong>"+pesos(s.q1*s.p1)+"</strong></td></tr>";
+  if(s.q2>0)filas+="<tr><td><strong>Hielo bolsa 2 Kg</strong></td><td>"+s.q2+"</td><td>"+pesos(s.p2)+"</td><td><strong>"+pesos(s.q2*s.p2)+"</strong></td></tr>";
+
+  /* entregas mensuales */
+  var bloqEnt="";
+  if(modoMensual&&entregas.length>0){
+    var items=entregas.filter(function(e){return e.q1>0||e.q2>0;})
+      .sort(function(a,b){return a.fecha.localeCompare(b.fecha);})
+      .map(function(e){
+        var ek=e.q1+e.q2*2;
+        var r=calcEnvio(e.bencina,e.peaje,e.kms);
+        var d2=s.esPa?{envFinal:0,desc:r.base}:aplicarDesc(ek,r.base);
+        var det=e.q1>0&&e.q2>0?(e.q1+"×1kg + "+e.q2+"×2kg"):e.q1>0?(e.q1+" bolsas 1kg"):(e.q2+" bolsas 2kg");
+        var envStr=pesos(d2.envFinal);
+        var descStr=d2.desc>0?" (-"+pesos(d2.desc)+")":"";
+        return "<div class='f-entrega-item'>"+
+          "<span class='fe-fecha'>"+fmtF(e.fecha)+"</span>"+
+          "<span class='fe-detalle'>"+det+" · "+ek+" kg</span>"+
+          "<span class='fe-envio'>envío: "+envStr+descStr+"</span>"+
+          "</div>";
+      }).join("");
+    if(items)bloqEnt="<div class='f-entregas'><div class='f-entregas-title'>Detalle de entregas del período</div>"+items+"</div>";
+  }
+
+  var subH="<tr class='fsub'><td colspan='3'>Subtotal Hielos</td><td>"+pesos(s.hielos)+"</td></tr>";
+
+  /* filas envío — desglose: total → combustible + peaje */
+  var filaEnv="";
+  if(s.envBase>0){
+    filaEnv+="<tr class='fsub'><td colspan='3'>Envío"+(modoMensual?" (período)":"")+"</td><td>"+pesos(s.envFinal)+"</td></tr>";
+    /* desglose combustible y peaje */
+    if(!modoMensual){
+      if(s.comb>0)   filaEnv+="<tr class='fdet'><td colspan='3'>&nbsp;&nbsp;— Combustible</td><td>"+pesos(s.comb)+"</td></tr>";
+      if(s.peajeT>0) filaEnv+="<tr class='fdet'><td colspan='3'>&nbsp;&nbsp;— Peaje</td><td>"+pesos(s.peajeT)+"</td></tr>";
+    } else {
+      entregas.filter(function(e){return e.kms>0;}).forEach(function(e){
+        var r=calcEnvio(e.bencina,e.peaje,e.kms);
+        var ek=e.q1+e.q2*2;
+        var d2=s.esPa?{envFinal:0}:aplicarDesc(ek,r.base);
+        filaEnv+="<tr class='fdet'><td colspan='3'>&nbsp;&nbsp;— "+fmtF(e.fecha)+" ("+e.kms+"km · $"+e.bencina+"/lt)</td><td>"+pesos(d2.envFinal)+"</td></tr>";
+        if(r.comb>0)   filaEnv+="<tr class='fdet'><td colspan='3'>&nbsp;&nbsp;&nbsp;&nbsp;· Combustible</td><td>"+pesos(r.comb)+"</td></tr>";
+        if(r.peajeT>0) filaEnv+="<tr class='fdet'><td colspan='3'>&nbsp;&nbsp;&nbsp;&nbsp;· Peaje</td><td>"+pesos(r.peajeT)+"</td></tr>";
+      });
+    }
+  }
+
+  /* descuento */
+  var filaDesc="";
+  if(s.esPa&&s.envBase>0){
+    filaDesc="<tr class='ffree'><td colspan='3'>Descuento Puente Alto</td><td>-"+pesos(s.envBase)+"</td></tr>"+
+      "<tr class='fdet'><td colspan='4' style='font-size:10px;color:#00a878;padding-bottom:7px;'>&nbsp;&nbsp;Envío "+pesos(s.envBase)+" → <strong>$0</strong> — ahorro por ser de la comuna</td></tr>";
+  } else if(s.descMonto>0){
+    filaDesc="<tr class='fdsc'><td colspan='3'>Descuento por volumen</td><td>-"+pesos(s.descMonto)+"</td></tr>";
+  }
+
+  var ppuRow=s.bolsas>0?"<tr class='fppu'><td colspan='4'>"+pesos(Math.round(s.ppu))+" promedio por bolsa (con envío)</td></tr>":"";
+
+  /* datos pago */
+  var pagRows="<div class='p-row'><span class='k'>Titular</span><span class='v'>"+c.nombre+"</span></div>";
+  if(c.rut&&c.rut!=="—")pagRows+="<div class='p-row'><span class='k'>RUT</span><span class='v'>"+c.rut+"</span></div>";
+  pagRows+="<div class='p-row'><span class='k'>Banco</span><span class='v'>"+c.banco+"</span></div>";
+  pagRows+="<div class='p-row'><span class='k'>Tipo</span><span class='v'>"+c.tipo+"</span></div>";
+  pagRows+="<div class='p-row'><span class='k'>N° Cuenta</span><span class='v'>"+c.num+"</span></div>";
+  if(c.email)pagRows+="<div class='p-row'><span class='k'>Email</span><span class='v'>"+c.email+"</span></div>";
+
+  var html=
+    "<div class='fh'>"+
+      "<div>"+
+        "<div class='f-logo'>HIELOS 9mm</div>"+
+        "<div class='f-sub-t'>"+(modoMensual?"Resumen mensual":"Cotización de venta")+"</div>"+
+        (refStr?"<div class='f-ref'>"+refStr+"</div>":"")+
+      "</div>"+
+      "<div class='f-meta'><strong>"+fecha+"</strong><br>Hora: "+hora+"</div>"+
+    "</div>"+
+    "<div class='fb'>"+
+      "<div class='f-sec-lbl'>Dirección de entrega</div>"+
+      "<div class='f-dir'><strong>"+dir+"</strong><div class='fc'>Cliente: "+nombre+"</div></div>"+
+      bloqEnt+
+      "<table class='ft'><thead><tr><th>Descripción</th><th>Cant.</th><th>P.unit.</th><th>Total</th></tr></thead>"+
+      "<tbody>"+filas+subH+filaEnv+filaDesc+
+      "<tr class='ftot'><td colspan='3'>TOTAL</td><td>"+pesos(s.total)+"</td></tr>"+ppuRow+
+      "</tbody></table>"+
+      "<hr class='fdash'>"+
+      "<div class='f-pago'><div class='f-sec-lbl'>Datos de pago</div>"+pagRows+"</div>"+
+    "</div>"+
+    "<div class='f-foot'>HIELOS 9mm · Puente Alto, Chile · Gracias por su preferencia 🧊</div>";
+
+  document.getElementById("factura-content").innerHTML=html;
+  var fw=document.getElementById("fw");
+  fw.style.display="block";
+  setTimeout(function(){fw.scrollIntoView({behavior:"smooth",block:"start"});},120);
+}
+
+/* ── IMPRIMIR EN VENTANA LIMPIA ── */
+function imprimirFactura(){
+  var cont=document.getElementById("capture-zone").innerHTML;
+  var sts=Array.from(document.querySelectorAll("style,link[rel='stylesheet']")).map(function(e){return e.outerHTML;}).join("\n");
+  var v=window.open("","_blank","width=600,height=900");
+  v.document.write("<!DOCTYPE html><html lang='es'><head><meta charset='UTF-8'><title>HIELOS 9mm</title>"+sts+
+    "<style>@page{margin:0.5cm;size:A4;}*{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;}html,body{margin:0;padding:0;background:#fff;}#cz{max-width:100%;box-shadow:none;border-radius:0;}</style>"+
+    "</head><body><div id='cz'>"+cont+"<\/div>"+
+    "<script>window.onload=function(){window.print();setTimeout(function(){window.close();},600);};<\/script></body></html>");
+  v.document.close();
+}
+function mostrarHint(){document.getElementById("captura-hint").style.display="block";}
+
+/* ── CHECKBOX PUENTE ALTO → recalcula y re-renderiza entregas ── */
+document.getElementById("pa").addEventListener("change",function(){
+  if(modoMensual)renderEntregas();
+  calcular();
+});
+
+calcular();
+</script>
+</body>
+</html>
